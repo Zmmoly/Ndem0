@@ -29,7 +29,7 @@ jobs:
       run: echo "$GOOGLE_SERVICES_JSON" > app/google-services.json
       
     - name: Build with Gradle
-      run: ./gradlew build --stacktrace
+      run: sh gradlew build --stacktrace
       
     - name: Build Debug APK
-      run: ./gradlew assembleDebug --stacktrace
+      run: sh gradlew assembleDebug --stacktrace
