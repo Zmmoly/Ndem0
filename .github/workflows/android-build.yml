@@ -20,13 +20,13 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+    - name: Make gradlew executable
+      [span_2](start_span)run: chmod +x gradlew[span_2](end_span)
       
     - name: Create google-services.json from secret
       env:
         GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
-      run: echo "$GOOGLE_SERVICES_JSON" > app/google-services.json
+      [span_3](start_span)run: echo "$GOOGLE_SERVICES_JSON" > app/google-services.json[span_3](end_span)
       
     - name: Cache Gradle packages
       uses: actions/cache@v3
@@ -36,33 +36,33 @@ jobs:
           ~/.gradle/wrapper
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
         restore-keys: |
-          ${{ runner.os }}-gradle-
+          [span_4](start_span)${{ runner.os }}-gradle-[span_4](end_span)
           
     - name: Build with Gradle
-      run: ./gradlew build --stacktrace
+      [span_5](start_span)run: sh gradlew build --stacktrace[span_5](end_span)
       
     - name: Build Debug APK
-      run: ./gradlew assembleDebug --stacktrace
+      [span_6](start_span)run: sh gradlew assembleDebug --stacktrace[span_6](end_span)
       
     - name: Upload Debug APK
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
         path: app/build/outputs/apk/debug/app-debug.apk
-        retention-days: 30
+        [span_7](start_span)retention-days: 30[span_7](end_span)
         
     - name: Build Release APK
-      run: ./gradlew assembleRelease --stacktrace
+      [span_8](start_span)run: sh gradlew assembleRelease --stacktrace[span_8](end_span)
       
     - name: Upload Release APK
       uses: actions/upload-artifact@v4
       with:
         name: app-release-unsigned
         path: app/build/outputs/apk/release/app-release-unsigned.apk
-        retention-days: 30
+        [span_9](start_span)retention-days: 30[span_9](end_span)
 
     - name: Run Unit Tests
-      run: ./gradlew test --stacktrace
+      [span_10](start_span)run: sh gradlew test --stacktrace[span_10](end_span)
       
     - name: Upload Test Reports
       if: always()
@@ -70,4 +70,4 @@ jobs:
       with:
         name: test-reports
         path: app/build/reports/tests/
-        retention-days: 30
+        [span_11](start_span)retention-days: 30[span_11](end_span)
