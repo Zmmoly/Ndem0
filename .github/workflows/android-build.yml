@@ -20,36 +20,16 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         
-    - name: Make gradlew executable
+    - name: Change wrapper permissions
       run: chmod +x gradlew
-      
+
     - name: Create google-services.json from secret
       env:
         GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
       run: echo "$GOOGLE_SERVICES_JSON" > app/google-services.json
       
     - name: Build with Gradle
-      run: sh gradlew build --stacktrace
+      run: ./gradlew build --stacktrace
       
     - name: Build Debug APK
-      run: sh gradlew assembleDebug --stacktrace
-      
-    - name: Upload Debug APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: app-debug
-        path: app/build/outputs/apk/debug/app-debug.apk
-        retention-days: 30
-        
-    - name: Build Release APK
-      run: sh gradlew assembleRelease --stacktrace
-      
-    - name: Upload Release APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: app-release-unsigned
-        path: app/build/outputs/apk/release/app-release-unsigned.apk
-        retention-days: 30
-
-    - name: Run Unit Tests
-      run: sh gradlew test --stacktrace
+      run: ./gradlew assembleDebug --stacktrace
